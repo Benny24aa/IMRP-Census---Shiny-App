@@ -1,5 +1,10 @@
 ##### Region Data
 
+
+
+IMRP_Full_Census_File_Cleaned$x <- as.numeric(IMRP_Full_Census_File_Cleaned$x )
+IMRP_Full_Census_File_Cleaned$y <- as.numeric(IMRP_Full_Census_File_Cleaned$y)
+
 IMRP_Full_Census_File_Cleaned_Region <- IMRP_Full_Census_File_Cleaned %>% 
   mutate(Region = case_when(x > -2997.47 & x < -1231.91 & y > -1115.58 & y < 1659.69 ~ "San Fierro",
                             x > -2997.47 & x < - 480.539 & y > 1659.68 & y < 2993.87 ~ "Tierra Robada",
@@ -17,6 +22,5 @@ IMRP_Full_Census_File_Cleaned_Region <- IMRP_Full_Census_File_Cleaned %>%
                             ~ 'Bone County',
                             x >869.461 & x <2997.096 & y > 596.349 & y <2993.87
                             ~ 'Las Venturas'
-                            ))
-
-
+  ))
+                            
