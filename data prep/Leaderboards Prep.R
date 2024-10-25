@@ -27,6 +27,7 @@ IMRP_Data_Cleaned_Deaths <- IMRP_Full_Census_File_Cleaned %>%
 kds <- merge(IMRP_Data_Cleaned_Deaths, IMRP_Data_Cleaned_kills) %>% 
   mutate(Ratio = Kills/Deaths)
 
+##### KD across all wars by player
 
 total_kds_kills <- IMRP_Full_Census_File_Cleaned %>% 
   mutate(Team_Kill = if_else(killedFactionId == killerFactionId, "Team Kill", "Not")) %>% 
@@ -36,7 +37,6 @@ total_kds_kills <- IMRP_Full_Census_File_Cleaned %>%
   rename('Player Name' = killerName, Kills = count)
 
 
-
 totl_kds_Deaths <- IMRP_Full_Census_File_Cleaned %>% 
   group_by(killedName) %>% 
   summarise(count=n(), .groups = 'drop') %>% 
@@ -44,3 +44,5 @@ totl_kds_Deaths <- IMRP_Full_Census_File_Cleaned %>%
 
 kds_total <- merge(totl_kds_Deaths, total_kds_kills) %>% 
   mutate(Ratio = Kills/Deaths)
+
+rm(IMRP_Data_Cleaned_Deaths, IMRP_Data_Cleaned_kills, total_kds_kills, totl_kds_Deaths)
