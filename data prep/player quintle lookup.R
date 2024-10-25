@@ -36,4 +36,7 @@ merged_quintles <- merged_quintles %>%
                               group_1 == FALSE & group_2 == FALSE & group_3 == FALSE & group_4 == FALSE & group_5 == TRUE ~ "Group 5"  )
          )
                             
-  
+Quintle_Lookup <- merged_quintles %>% 
+  select(`Player ID`, quintle
+         )
+rm(player_quintles, player_quintles_death_ids, player_quintles_kills_ids, merged_quintles)
