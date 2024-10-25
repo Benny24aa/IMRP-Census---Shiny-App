@@ -27,3 +27,5 @@ IMRP_Full_Census_File_Cleaned <- full_join(Sniper_List_Death, IMRP_Full_Census_F
 IMRP_Full_Census_File_Cleaned$Tier_Death <- IMRP_Full_Census_File_Cleaned$Tier_Death %>%  replace_na('Tier 2/3')
 
 IMRP_Full_Census_File_Cleaned$Tier_Killer <- IMRP_Full_Census_File_Cleaned$Tier_Killer %>%  replace_na('Tier 2/3')
+
+rm( Sniper_List_Death, Sniper_List_Killer, IMRP_Full_Census_File)
