@@ -23,3 +23,7 @@ group_by(killedName, War_ID) %>%
 IMRP_Full_Census_File_Cleaned <- full_join(Sniper_List_Killer, IMRP_Full_Census_File, by = c("killerName", "War_ID"))
 
 IMRP_Full_Census_File_Cleaned <- full_join(Sniper_List_Death, IMRP_Full_Census_File_Cleaned, by=c("killedName", "War_ID"))
+
+IMRP_Full_Census_File_Cleaned$Tier_Death <- IMRP_Full_Census_File_Cleaned$Tier_Death %>%  replace_na('Tier 2/3')
+
+IMRP_Full_Census_File_Cleaned$Tier_Killer <- IMRP_Full_Census_File_Cleaned$Tier_Killer %>%  replace_na('Tier 2/3')
