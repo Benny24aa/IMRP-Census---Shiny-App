@@ -12,10 +12,14 @@ player_quintles_kills_ids <- IMRP_Full_Census_File_Cleaned %>%
   select(-count) %>% 
   rename('Player ID' = killerId, 'Player Name' = killerName)
 
-merged_quintles <- bind_rows(player_quintles_death_ids, player_quintles_kills_ids) %>% 
+merged_quintles <- bind_rows(player_quintles_death_ids, player_quintles_kills_ids)
+
+merged_quintles <- merged_quintles %>% 
   unique() %>% 
-  na.omit() %>% 
-  arrange(merged_quintles$`Player ID`)
+  na.omit() 
+
+
+ merged_quintles <- merged_quintles %>%  arrange(merged_quintles$`Player ID`)
 
 
 merged_quintles <- merged_quintles %>% 
@@ -39,4 +43,5 @@ merged_quintles <- merged_quintles %>%
 Quintle_Lookup <- merged_quintles %>% 
   select(`Player ID`, quintle
          )
-rm(player_quintles, player_quintles_death_ids, player_quintles_kills_ids, merged_quintles)
+rm(player_quintles_death_ids, player_quintles_kills_ids, merged_quintles)
+
