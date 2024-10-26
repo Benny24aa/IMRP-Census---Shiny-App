@@ -10,7 +10,7 @@ information <- tabPanel(title = "Information",
                         
                         fluidRow(
                           column(12,
-                                 h4(tags$b("What is the NHS Open Data Dashboard?" , style = "color:  #336699 ; font-weight: 600")),
+                                 h4(tags$b("What is the IMRP Census Dashboard?" , style = "color:  #336699 ; font-weight: 600")),
                                  p(" ."), 
                                  h4(tags$b("Type of Data Explored?", style = "color:  #336699 ; font-weight: 600" )),
                                  p("."),
