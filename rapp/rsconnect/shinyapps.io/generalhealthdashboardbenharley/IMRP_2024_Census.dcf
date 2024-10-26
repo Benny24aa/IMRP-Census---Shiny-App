@@ -1,0 +1,12 @@
+name: IMRP_2024_Census
+title: IMRP_2024_Census
+username: generalhealthdashboardbenharley
+account: generalhealthdashboardbenharley
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 13139986
+bundleId: 9272869
+url: https://benny24aa.shinyapps.io/IMRP_2024_Census/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
