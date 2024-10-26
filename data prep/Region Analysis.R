@@ -169,4 +169,36 @@ IMRP_Full_Census_File_Cleaned_Region <- IMRP_Full_Census_File_Cleaned %>%
 
 
 
+IF  x > 850 & x < 1300 & y > -2892.97 & y < -1830.4985
+then "East Verona Beach & Verdant Bluffs"
+ x > 1300 & x < 1600 & y > -2892.97 & y < -1830.4985
+then 'East Verdant Bluffs, Los Santos Airport & El Corona'
+ x > 1600 & x < 1900 & y > -2892.97 & y < -1830.4985
+then 'East Verdant Bluffs, Los Santos Airport & El Corona'
+ x > 1600 & x < 1900 & y > -2892.97 & y < -1830.4985
+then "East Verdant Bluffs, Los Santos Airport & El Corona"
+ x > 2500 & x < 2800 & y > -2892.97 & y < -1830.4985
+then 'Playa Del Seville & Ocean Docks'
+ x > 2800 & x < 2997.06 & y > -2892.97 & y < -1830.4985
+then 'Playa Del Seville & Ocean Docks'
+ x > 44.6147 & x < 550 & y > -2892.97 & y < -768.027
+then 'Richman, Rodeo, & Santa Maria Beach'
+ x > 550 & x < 850 & y > -2892.97 & y < -768.027
+then 'Verona Beach, West Market, Vinewood, & West Mullholl&'
+ x > 850 & x < 1300 & y > -1830.4985 & y < -768.027
+then 'Market & Temple'
+ x > 1300 & x < 1600 & y > -1830.4985 & y < -768.027
+then 'Market Far East, Commerce, & Downtown Los Santos'
+ x > 1600 & x < 1900 & y > -1830.4985 & y < -768.027
+then 'Mulholl& Intersection & West Glen Park'
+ x > 1600 & x < 1900 & y > -1830.4985 & y < -768.027
+then 'Mulholl& Intersection & West Glen Park'
+ x > 1900 & x < 2200 & y > -1830.4985 & y < -768.027
+then "Idlewood & Glen Park"
+ x > 2200 & x < 2500 & y > -1830.4985 & y < -768.027
+then 'Jefferson, West Las Colinas & East Idlewood'
+ x > 2500 & x < 2800 & y > -1830.4985 & y < -768.027
+then "East Los Santos & Ganton"
+ x > 2800 & x < 2997.06 & y > -1830.4985 & y < -768.027
+then "East Beach"
 
