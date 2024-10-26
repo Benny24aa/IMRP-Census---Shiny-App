@@ -1,12 +1,12 @@
 
-source("C:/Users/benny/Documents/My Resps/IMRP-Census---Shiny-App/Information Page Scripts/information page ui.R")
+source("Information Page Scripts/information page ui.R")
 
 navbarPage(title = div(tags$a(img(src="", width=120, alt = ""),
                               href= "",
                               target = "_blank"),
                        style = "position: relative; top: -10px;"),
            windowTitle = "IMRP Census 2024", #title for browser tab
-           header = tags$head(includeCSS("C:/Users/benny/Documents/My Resps/IMRP-Census---Shiny-App/www/styles.css"), # CSS styles
+           header = tags$head(includeCSS("www/styles.css"), # CSS styles
                               HTML("<html lang='en'>")),
            
            ##### Tab Panels
