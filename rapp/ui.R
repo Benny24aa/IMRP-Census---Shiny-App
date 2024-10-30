@@ -1,6 +1,6 @@
 
 source("Information Page Scripts/information page ui.R")
-source("data prep/Active War/Active War UI.R")
+source("data prep/Active War/Active War KD UI.R")
 navbarPage(title = div(tags$a(img(src="", width=120, alt = ""),
                               href= "",
                               target = "_blank"),
