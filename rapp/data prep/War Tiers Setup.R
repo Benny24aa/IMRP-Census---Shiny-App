@@ -30,13 +30,15 @@ IMRP_Full_Census_File_Cleaned$Tier_Killer <- IMRP_Full_Census_File_Cleaned$Tier_
 
 IMRP_Full_Census_File_Cleaned$killerName <- IMRP_Full_Census_File_Cleaned$killerName %>%  replace_na('Suicide')
 
-IMRP_Full_Census_File_Cleaned <- IMRP_Full_Census_File_Cleaned %>% 
-  filter(killerName != "Suicide")
-
 IMRP_Suicides <- IMRP_Full_Census_File_Cleaned %>% 
-  filter(killerName == "Suicide") %>% 
-  mutate(Tier_Killer = "Suicide")
+ filter(killerName == "Suicide") %>% 
+ mutate(Tier_Killer = "Suicide")
+
+ IMRP_Full_Census_File_Cleaned <- IMRP_Full_Census_File_Cleaned %>% 
+   filter(killerName != "Suicide")
+
 
 IMRP_Full_Census_File_Cleaned <- bind_rows(IMRP_Full_Census_File_Cleaned, IMRP_Suicides)
 
-rm( Sniper_List_Death, Sniper_List_Killer, IMRP_Full_Census_File, IMRP_Suicides)
+
+rm(IMRP_Suicides, Sniper_List_Death, Sniper_List_Killer)
