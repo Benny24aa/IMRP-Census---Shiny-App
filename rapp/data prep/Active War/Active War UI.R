@@ -1,1 +1,2 @@
-Active_War <- tabPanel(title = "War ID 44")
+Active_War_KDs_UI <- tabPanel(title = "Kill/Death Ratios")
+
