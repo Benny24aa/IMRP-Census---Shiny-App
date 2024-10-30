@@ -253,8 +253,13 @@ war_42_done <- war_42$kills %>%
 ####### War ID 43
 war_id_43_api_feed <- "https://launcher-api.sa-mp.im/api/v1/misc/war-export?war_id=43"
 war_43 <- fromJSON(war_id_43_api_feed)
-war_43_done <- war_43$kills%>% 
+war_43_done <- war_43$kills %>% 
   mutate(War_ID = "War 43")
+
+war_id_44_api_feed <- "https://launcher-api.sa-mp.im/api/v1/misc/war-export?war_id=44"
+war_44 <- fromJSON(war_id_44_api_feed)
+war_44_done <- war_44$kills %>% 
+  mutate(War_ID = "War 44")
 
 rm(war_1,war_2, war_4, war_5, war_6, war_7,
    war_8, war_9, war_10, war_11, war_12, war_13,
@@ -263,7 +268,7 @@ rm(war_1,war_2, war_4, war_5, war_6, war_7,
    war_24, war_25, war_26, war_27, war_28, 
    war_29, war_30, war_31, war_32, war_33, 
    war_34, war_35, war_36, war_37, war_38,
-   war_39, war_40, war_41, war_42, war_43)
+   war_39, war_40, war_41, war_42, war_43, war_44)
 
 IMRP_Full_Census_File <- bind_rows(war_1_done,war_2_done, war_4_done, war_5_done, war_6_done, war_7_done,
                                    war_8_done, war_9_done, war_10_done, war_11_done, war_12_done, war_13_done,
@@ -272,7 +277,7 @@ IMRP_Full_Census_File <- bind_rows(war_1_done,war_2_done, war_4_done, war_5_done
                                    war_24_done, war_25_done, war_26_done, war_27_done, war_28_done, 
                                    war_29_done, war_30_done, war_31_done, war_32_done, war_33_done, 
                                    war_34_done, war_35_done, war_36_done, war_37_done, war_38_done,
-                                   war_39_done, war_40_done, war_41_done, war_42_done, war_43_done)
+                                   war_39_done, war_40_done, war_41_done, war_42_done, war_43_done, war_44_done)
 
 rm(war_1_done,war_2_done, war_4_done, war_5_done, war_6_done, war_7_done,
    war_8_done, war_9_done, war_10_done, war_11_done, war_12_done, war_13_done,
@@ -281,4 +286,4 @@ rm(war_1_done,war_2_done, war_4_done, war_5_done, war_6_done, war_7_done,
    war_24_done, war_25_done, war_26_done, war_27_done, war_28_done, 
    war_29_done, war_30_done, war_31_done, war_32_done, war_33_done, 
    war_34_done, war_35_done, war_36_done, war_37_done, war_38_done,
-   war_39_done, war_40_done, war_41_done, war_42_done, war_43_done)
+   war_39_done, war_40_done, war_41_done, war_42_done, war_43_done, war_44_done)
