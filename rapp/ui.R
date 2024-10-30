@@ -11,8 +11,16 @@ navbarPage(title = div(tags$a(img(src="", width=120, alt = ""),
            
            ##### Tab Panels
            information, ### Information Tab being called on by UI
-           navbarMenu("Leaderboards"),# Leaderboards
-           navbarMenu("Location Analysis") # Location Analysis
+           navbarMenu("Active Wars"),
+           navbarMenu("War Fun Facts"),
+           navbarMenu("War Leaderboards"),
+           navbarMenu("War Location Analysis"),
+           navbarMenu("War Weapon Analysis"),
+           navbarMenu("Weapon Licenses"),
+           navbarMenu("Global Wars Analysis"),
+           navbarMenu("Minesweeper and Statelot"),
+           navbarMenu("Giftboxes Halloween"),
+           navbarMenu("Christmas Event")
            
            
            
