@@ -42,3 +42,30 @@ Weapon_Based_KDs_Active_War <- bind_rows(Active_War_KDs_reason, Active_War_KDs)
 
 Weapon_Based_KDs_Active_War <- Weapon_Based_KDs_Active_War %>% 
   mutate(KD_Type = "Weapon")
+
+rm(Active_War_KDs_reason)
+
+##### Dataset for Regions
+
+Active_War_kills_Region <- Active_War %>% 
+  mutate(Team_Kill = if_else(killedFactionId == killerFactionId, "Team Kill", "Not")) %>% 
+  filter(Team_Kill != "Team Kill") %>% 
+  group_by(killerName, War_ID, killerId, Region) %>% 
+  summarise(count=n(), .groups = 'drop') %>% 
+  rename('Player Name' = killerName, Kills = count)
+
+Active_War_Deaths_Region <- Active_War %>% 
+  group_by(killedName, War_ID, Region) %>% 
+  summarise(count=n(), .groups = 'drop') %>% 
+  rename('Player Name' = killedName, Deaths = count)
+
+Active_War_KDs_Location <- merge(Active_War_kills_reason, Active_War_Deaths_reason) %>% 
+  mutate(Ratio = Kills/Deaths) %>% 
+  mutate(reason = as.character(reason))
+
+Location_Based_KDs_Active_War <- bind_rows(Active_War_KDs_Location, Active_War_KDs)
+
+Location_Based_KDs_Active_War <-Location_Based_KDs_Active_War %>% 
+  mutate(KD_Type = "Location")
+
+rm(Active_War_KDs_Location)
