@@ -1,7 +1,14 @@
 ##### Data set for Full KD
 
+Table_KD_List <- c("All Kill Death Ratios" = "Table_War_All_KD_Active_War",
+                   "All Weapon Based Kill Death Ratios" = "Table_War_Weapon_KD_Active_War",
+                   "All Region Based Kill Death Ratios" = "Table_War_All_KD_Region_War",
+                   "Region Deaths and Kills" = "Active_War_Region_NonPlayer_Full_Join")
+
 Active_War <- IMRP_Full_Census_File_Cleaned %>% 
-  filter(War_ID == "War 44")
+  filter(War_ID == "War 44") %>% 
+  mutate(killerFactionId = gsub('16', 'DeLeon', killerFactionId), killerFactionId = gsub('14', 'Navarro', killerFactionId),
+         killerFactionId = gsub('0', 'Suicide', killerFactionId), killedFactionId = gsub('16', 'DeLeon', killedFactionId), killedFactionId = gsub('14', 'Navarro', killedFactionId))
 
 Active_War_kills <- Active_War %>% 
   mutate(Team_Kill = if_else(killedFactionId == killerFactionId, "Team Kill", "Not")) %>% 
@@ -96,6 +103,25 @@ Table_War_All_KD_Region_War <- Main_Active_War_Data_Set %>%
   filter(Reason != "All") %>% 
   select(-KD_Type, -War_ID, -killerId)
 
-Table_KD_List <- c("All Kill Death Ratios" = "Table_War_All_KD_Active_War",
-                   "All Weapon Based Kill Death Ratios" = "Table_War_Weapon_KD_Active_War",
-                   "All Region Based Kill Death Ratios" = "Table_War_All_KD_Region_War")
+
+
+############################################################################################################
+
+# Location Leaderboards Section
+
+############################################################################################################
+
+Active_War_kills_Region_NonPlayer <- Active_War %>% 
+  mutate(Team_Kill = if_else(killedFactionId == killerFactionId, "Team Kill", "Not")) %>% 
+  filter(Team_Kill != "Team Kill") %>% 
+  group_by(killerFactionId, Region) %>% 
+  summarise(count=n(), .groups = 'drop') %>% 
+  rename(Kills = count, Faction = killerFactionId)
+
+Active_War_Deaths_Region_NonPlayer <- Active_War %>% 
+  group_by(killedFactionId, Region) %>% 
+  summarise(count=n(), .groups = 'drop') %>% 
+  rename(Deaths = count, Faction = killedFactionId)
+
+Active_War_Region_NonPlayer_Full_Join <- full_join(Active_War_Deaths_Region_NonPlayer, Active_War_kills_Region_NonPlayer, by =c("Faction", "Region")) %>% 
+  filter(Faction != "Suicide")
