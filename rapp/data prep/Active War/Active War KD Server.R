@@ -64,7 +64,7 @@ output$total_deaths_by_player_per_day_graph <- renderPlotly({
           x = ~date_killed,
           y = ~Deaths,
           type = 'bar')%>% 
-    layout(barmode = 'stack')
+    layout(xaxis = list(title = 'Date Killed'), barmode = 'stack')
 
   
 })
