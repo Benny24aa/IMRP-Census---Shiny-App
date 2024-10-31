@@ -3,7 +3,8 @@
 Table_KD_List <- c("All Kill Death Ratios" = "Table_War_All_KD_Active_War",
                    "All Weapon Based Kill Death Ratios" = "Table_War_Weapon_KD_Active_War",
                    "All Region Based Kill Death Ratios" = "Table_War_All_KD_Region_War",
-                   "Region Deaths and Kills" = "Active_War_Region_NonPlayer_Full_Join")
+                   "Region Deaths and Kills for DeLeon" = "Active_War_Region_NonPlayer_Full_Join_DeLeon",
+                   "Region Deaths and Kills for Navarro" = "Active_War_Region_NonPlayer_Full_Join_Navarro")
 
 Active_War <- IMRP_Full_Census_File_Cleaned %>% 
   filter(War_ID == "War 44") %>% 
@@ -123,5 +124,14 @@ Active_War_Deaths_Region_NonPlayer <- Active_War %>%
   summarise(count=n(), .groups = 'drop') %>% 
   rename(Deaths = count, Faction = killedFactionId)
 
+
 Active_War_Region_NonPlayer_Full_Join <- full_join(Active_War_Deaths_Region_NonPlayer, Active_War_kills_Region_NonPlayer, by =c("Faction", "Region")) %>% 
   filter(Faction != "Suicide")
+
+Active_War_Region_NonPlayer_Full_Join$Region <- Active_War_Region_NonPlayer_Full_Join$Region %>% replace_na("The Sea") 
+
+Active_War_Region_NonPlayer_Full_Join_DeLeon <- Active_War_Region_NonPlayer_Full_Join %>% 
+  filter(Faction == "DeLeon")
+
+Active_War_Region_NonPlayer_Full_Join_Navarro <- Active_War_Region_NonPlayer_Full_Join %>% 
+  filter(Faction == "Navarro")
