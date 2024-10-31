@@ -6,7 +6,8 @@ data_table <- reactive({
   table_data <- switch(input$ref_select,
                        "Table_War_All_KD_Active_War" = Table_War_All_KD_Active_War,
                        "Table_War_Weapon_KD_Active_War" = Table_War_Weapon_KD_Active_War,
-                       "Table_War_All_KD_Region_War" = Table_War_All_KD_Region_War)
+                       "Table_War_All_KD_Region_War" = Table_War_All_KD_Region_War,
+                       "Active_War_Region_NonPlayer_Full_Join" = Active_War_Region_NonPlayer_Full_Join)
 })
 
 # Render Data Table 
