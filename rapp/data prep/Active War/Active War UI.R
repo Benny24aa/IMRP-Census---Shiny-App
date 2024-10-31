@@ -1,1 +1,0 @@
-Active_War <- tabPanel(title = "War ID 43")
