@@ -4,7 +4,9 @@ Table_KD_List <- c("All Kill Death Ratios" = "Table_War_All_KD_Active_War",
                    "All Weapon Based Kill Death Ratios" = "Table_War_Weapon_KD_Active_War",
                    "All Region Based Kill Death Ratios" = "Table_War_All_KD_Region_War",
                    "Region Deaths and Kills for DeLeon" = "Active_War_Region_NonPlayer_Full_Join_DeLeon",
-                   "Region Deaths and Kills for Navarro" = "Active_War_Region_NonPlayer_Full_Join_Navarro")
+                   "Region Deaths and Kills for Navarro" = "Active_War_Region_NonPlayer_Full_Join_Navarro",
+                   "Kill to Damage Ratios" = "war_44_damage",
+                   "Suicides" = "war_44_suicides")
 
 Active_War <- IMRP_Full_Census_File_Cleaned %>% 
   filter(War_ID == "War 44") %>% 
@@ -163,3 +165,12 @@ war_44_damage <- full_join(Active_War_kills, war_44_damage, by = "Player Name") 
   select(-killerId) %>% 
   mutate(Damage_Kill_Ratio = total_damage / Kills)
 
+war_44_suicides <- Active_War %>% 
+  filter(killerFactionId == "Suicide") %>% 
+  select(killedName) %>% 
+  group_by(killedName) %>% 
+  summarise(count=n(), .groups = 'drop') %>% 
+  rename(Suicides = count)
+  
+  
+  
