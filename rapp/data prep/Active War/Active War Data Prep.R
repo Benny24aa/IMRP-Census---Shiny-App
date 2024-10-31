@@ -163,7 +163,8 @@ war_44_damage <- war_44_damage %>%
 
 war_44_damage <- full_join(Active_War_kills, war_44_damage, by = "Player Name") %>% 
   select(-killerId) %>% 
-  mutate(Damage_Kill_Ratio = total_damage / Kills)
+  mutate(Damage_Kill_Ratio = total_damage / Kills) %>% 
+  rename('Total Damage' = total_damage)
 
 war_44_suicides <- Active_War %>% 
   filter(killerFactionId == "Suicide") %>% 
@@ -172,5 +173,86 @@ war_44_suicides <- Active_War %>%
   summarise(count=n(), .groups = 'drop') %>% 
   rename(Suicides = count)
   
+rm(Active_War_Deaths_reason, Active_War_Deaths_Region, Active_War_Deaths_Region_NonPlayer,
+   Active_War_KDs, Active_War_kills, Active_War_kills_reason, Active_War_kills_Region, Active_War_kills_Region_NonPlayer, Active_War_Region_NonPlayer_Full_Join)
+rm(Active_War_Location_Region, war_44 ) 
+
+#######################################################################################################################################
+
+# Preparing for graphical analysis
+
+#######################################################################################################################################
+
+Active_War_Deaths <- Active_War %>% 
+  group_by(killedName, War_ID) %>% 
+  summarise(count=n(), .groups = 'drop') %>% 
+  rename('Player Name' = killedName, Deaths = count)
   
+Active_War_Death_Graph_Prep <- Active_War %>% 
+  select(killedName, date_killed) %>% 
+  mutate(date_killed = gsub("T", " ", date_killed), date_killed = gsub("Z", '', date_killed)) %>% 
+  mutate(date_killed = gsub(" .*","", date_killed))
+
+Active_War_Death_Graph_Prep$date_killed <- as.Date(Active_War_Death_Graph_Prep$date_killed)
+
+Active_War_Death_Graph_Prep <- Active_War_Death_Graph_Prep %>% 
+  group_by(killedName, date_killed) %>% 
+  summarise(count=n(), .groups = 'drop') %>% 
+  rename( Deaths = count)
+
+Active_War_Deaths <- Active_War_Deaths %>% 
+  rename(total_deaths = Deaths) %>% 
+  rename(killedName = 'Player Name')
+
+Active_War_Death_Graph_Prep <- full_join(Active_War_Deaths, Active_War_Death_Graph_Prep, by = "killedName") 
+
+Active_War_Death_Graph_Prep$Deaths <- as.numeric(Active_War_Death_Graph_Prep$Deaths)
+Active_War_Death_Graph_Prep$total_deaths <- as.numeric(Active_War_Death_Graph_Prep$total_deaths)
+
+Active_War_Death_Graph_Prep <- Active_War_Death_Graph_Prep %>% 
+  mutate(Percent_Total_Kills = Deaths / total_deaths) %>% 
+  mutate(Percent_Total_Kills = Percent_Total_Kills * 100) %>% 
+  select(-total_deaths)
+
+Active_War_Total_Deaths <- Active_War %>% 
+  select(killedName) %>% 
+  group_by(killedName) %>% 
+  summarise(count=n(), .groups = 'drop') %>% 
+  mutate(All = "All") %>% 
+  select(-killedName) 
+
+Active_War_Total_Deaths$count <- as.numeric(Active_War_Total_Deaths$count)
+
+Active_War_Total_Deaths <- Active_War_Total_Deaths %>% 
+  group_by(All) %>% 
+  summarise(total_deaths = sum(count), .groups = 'drop')
+
+Active_War_Death_Graph_Prep <- Active_War_Death_Graph_Prep %>% 
+  mutate(All = "All") 
   
+Active_War_Death_Graph_Prep <- full_join(Active_War_Death_Graph_Prep, Active_War_Total_Deaths, by = "All") 
+
+Active_War_Death_Graph_Prep <- Active_War_Death_Graph_Prep %>% 
+  mutate(War_Wide_Total_Percentage = Deaths/total_deaths) %>% 
+  mutate(War_Wide_Total_Percentage = War_Wide_Total_Percentage * 100) %>% 
+  select(-total_deaths)
+
+Total_Deaths_All_Wars <- IMRP_Full_Census_File_Cleaned %>% 
+select(killedName) %>% 
+  group_by(killedName) %>% 
+  summarise(count=n(), .groups = 'drop') %>% 
+  mutate(All = "All") %>% 
+  select(-killedName) 
+
+Total_Deaths_All_Wars$count <- as.numeric(Total_Deaths_All_Wars$count)
+
+Total_Deaths_All_Wars <- Total_Deaths_All_Wars %>% 
+  group_by(All) %>% 
+  summarise(total_deaths = sum(count), .groups = 'drop')
+
+Active_War_Death_Graph_Prep <- full_join(Active_War_Death_Graph_Prep, Total_Deaths_All_Wars, by = "All") 
+
+Active_War_Death_Graph_Prep <- Active_War_Death_Graph_Prep %>% 
+  mutate(All_Wars_Total_Percentage = Deaths/total_deaths) %>% 
+  mutate(All_Wars_Total_Percentage = All_Wars_Total_Percentage * 100) %>% 
+  select(-total_deaths) 
