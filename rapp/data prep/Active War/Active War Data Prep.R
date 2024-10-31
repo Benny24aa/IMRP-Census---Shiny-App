@@ -131,7 +131,35 @@ Active_War_Region_NonPlayer_Full_Join <- full_join(Active_War_Deaths_Region_NonP
 Active_War_Region_NonPlayer_Full_Join$Region <- Active_War_Region_NonPlayer_Full_Join$Region %>% replace_na("The Sea") 
 
 Active_War_Region_NonPlayer_Full_Join_DeLeon <- Active_War_Region_NonPlayer_Full_Join %>% 
-  filter(Faction == "DeLeon")
+  filter(Faction == "DeLeon")%>% 
+  mutate(Ratio = Kills/Deaths)
 
 Active_War_Region_NonPlayer_Full_Join_Navarro <- Active_War_Region_NonPlayer_Full_Join %>% 
-  filter(Faction == "Navarro")
+  filter(Faction == "Navarro")%>% 
+  mutate(Ratio = Kills/Deaths)
+
+war_id_44_player_lookup <- Active_War %>% 
+  select(killerId, killerName) %>% 
+  rename(idPlayer = killerId) %>% 
+  group_by(idPlayer, killerName) %>% 
+  summarise(count=n(), .groups = 'drop') %>% 
+  select(-count)
+
+war_id_44_api_feed <- "https://launcher-api.sa-mp.im/api/v1/misc/war-export?war_id=44"
+war_44 <- fromJSON(war_id_44_api_feed)
+war_44_damage <- war_44$damage %>% 
+  mutate(War_ID = "War 44")
+
+war_44_damage <- full_join(war_id_44_player_lookup, war_44_damage, by = "idPlayer") %>% 
+  select(-idPlayer)
+
+war_44_damage <- war_44_damage %>% 
+  select(killerName, total_damage) %>% 
+  group_by(killerName) %>% 
+  summarise(total_damage = sum(total_damage), .groups = 'drop') %>% 
+  rename('Player Name' = killerName)
+
+war_44_damage <- full_join(Active_War_kills, war_44_damage, by = "Player Name") %>% 
+  select(-killerId) %>% 
+  mutate(Damage_Kill_Ratio = total_damage / Kills)
+
