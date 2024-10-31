@@ -1,24 +1,22 @@
 ####################### Creating a table so players can see KD's for numerous different things
 
 
-active_war_kd_table <- reactive({
+data_table <- reactive({
   
-  table_data <- switch(input$KD_Type_Input,
+  table_data <- switch(input$ref_select,
                        "Table_War_All_KD_Active_War" = Table_War_All_KD_Active_War,
                        "Table_War_Weapon_KD_Active_War" = Table_War_Weapon_KD_Active_War,
                        "Table_War_All_KD_Region_War" = Table_War_All_KD_Region_War)
- 
-   
 })
 
-###### Render Table
+# Render Data Table 
 
-output$KD_Table_Filtered <- DT::renderDataTable({
+output$table_filtered <- DT::renderDataTable({
   
   # Remove the underscore from column names in the table
-  table_colnames <- gsub("_", " ", colnames(active_war_kd_table()))
+  table_colnames  <-  gsub("_", " ", colnames(data_table()))
   
-  DT::datatable(active_war_kd_table(), style = 'bootstrap',
+  DT::datatable(data_table(), style = 'bootstrap',
                 class = 'table-bordered table-condensed',
                 rownames = FALSE,
                 options = list(pageLength = 20,
@@ -29,13 +27,14 @@ output$KD_Table_Filtered <- DT::renderDataTable({
   
 })
 
+
 # Download Data 
-output$download_table_csv_kd <- downloadHandler(
+output$download_table_csv <- downloadHandler(
   filename = function() {
-    paste(input$KD_Type_Input, "_data.csv", sep = "")
+    paste(input$ref_select, "_data.csv", sep = "")
   },
   content = function(file) {
     # This downloads only the data the user has selected using the table filters
-    write_csv(active_war_kd_table()[input[["KD_Table_Filtered_rows_all"]], ], file) 
+    write_csv(data_table()[input[["table_filtered_rows_all"]], ], file) 
   } 
 )
