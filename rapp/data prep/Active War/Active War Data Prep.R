@@ -175,7 +175,7 @@ war_44_suicides <- Active_War %>%
   
 rm(Active_War_Deaths_reason, Active_War_Deaths_Region, Active_War_Deaths_Region_NonPlayer,
    Active_War_KDs, Active_War_kills, Active_War_kills_reason, Active_War_kills_Region, Active_War_kills_Region_NonPlayer, Active_War_Region_NonPlayer_Full_Join)
-rm(Active_War_Location_Region, war_44 ) 
+rm(war_44 ) 
 
 #######################################################################################################################################
 
