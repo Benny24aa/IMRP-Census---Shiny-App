@@ -83,13 +83,18 @@ Main_Active_War_Data_Set <- bind_rows(Main_Active_War_Data_Set, Active_War_KDs) 
   rename(Reason = reason)
 
 Table_War_Weapon_KD_Active_War <- Main_Active_War_Data_Set %>% 
-  filter(KD_Type == "Weapon")
+  filter(KD_Type == "Weapon") %>% 
+  filter(Reason != "All") %>% 
+  select(-KD_Type, -War_ID, -killerId)
 
 Table_War_All_KD_Active_War <- Main_Active_War_Data_Set %>% 
-  filter(KD_Type == "All")
+  filter(KD_Type == "All") %>% 
+  select(-KD_Type, -War_ID, -killerId)
 
 Table_War_All_KD_Region_War <- Main_Active_War_Data_Set %>% 
-  filter(KD_Type == "Region")
+  filter(KD_Type == "Region") %>% 
+  filter(Reason != "All") %>% 
+  select(-KD_Type, -War_ID, -killerId)
 
 Table_KD_List <- c("All Kill Death Ratios" = "Table_War_All_KD_Active_War",
                    "All Weapon Based Kill Death Ratios" = "Table_War_Weapon_KD_Active_War",
