@@ -49,4 +49,44 @@ output$download_table_csv <- downloadHandler(
 ###############################################################################################################################
 
 
+##### Filter for all 3 graphs on deaths simple page ##### 
 
+filter_imrp_death_data <- reactive({
+  
+  filter_imrp_death_data <- Active_War_Death_Graph_Prep[Active_War_Death_Graph_Prep$killedName == input$death_analysis_killed_name_input,]
+  
+  return(filter_imrp_death_data )
+})
+
+output$total_deaths_by_player_per_day_graph <- renderPlotly({
+  
+  plot_ly(data = filter_imrp_death_data(),
+          x = ~date_killed,
+          y = ~Deaths,
+          type = 'bar')%>% 
+    layout(xaxis = list(title = 'Date Killed'), barmode = 'stack')
+
+  
+})
+
+output$total_percentage_by_player_per_day_graph <- renderPlotly({
+  
+  plot_ly(data = filter_imrp_death_data(),
+          x = ~date_killed,
+          y = ~War_Wide_Total_Percentage,
+          type = 'bar')%>% 
+    layout(xaxis = list(title = 'Date Killed'), yaxis = list(title = "Total Percentage"), barmode = 'stack')
+  
+  
+})
+
+output$total_percentage_all_wars_by_player_per_day_graph <- renderPlotly({
+  
+  plot_ly(data = filter_imrp_death_data(),
+          x = ~date_killed,
+          y = ~All_Wars_Total_Percentage,
+          type = 'bar')%>% 
+    layout(xaxis = list(title = 'Date Killed'), yaxis = list(title = "Total Percentage"), barmode = 'stack')
+  
+  
+})

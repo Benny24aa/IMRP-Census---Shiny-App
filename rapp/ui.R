@@ -1,6 +1,7 @@
 
 source("Information Page Scripts/information page ui.R")
 source("data prep/Active War/Active War KD UI.R")
+source("data prep/Active War/Active War Deaths Analysis UI.R")
 navbarPage(title = div(tags$a(img(src="", width=120, alt = ""),
                               href= "",
                               target = "_blank"),
@@ -11,7 +12,7 @@ navbarPage(title = div(tags$a(img(src="", width=120, alt = ""),
            
            ##### Tab Panels
            information, ### Information Tab being called on by UI
-           navbarMenu("DeLeon vs Navarro", Active_War_Leaderboard_UI),
+           navbarMenu("DeLeon vs Navarro", Active_War_Leaderboard_UI, Active_War_Deaths),
            navbarMenu("War Fun Facts"),
            navbarMenu("War Leaderboards"),
            navbarMenu("War Location Analysis"),
