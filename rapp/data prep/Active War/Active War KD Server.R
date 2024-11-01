@@ -79,3 +79,14 @@ output$total_percentage_by_player_per_day_graph <- renderPlotly({
   
   
 })
+
+output$total_percentage_all_wars_by_player_per_day_graph <- renderPlotly({
+  
+  plot_ly(data = filter_imrp_death_data(),
+          x = ~date_killed,
+          y = ~All_Wars_Total_Percentage,
+          type = 'bar')%>% 
+    layout(xaxis = list(title = 'Date Killed'), yaxis = list(title = "Total Percentage"), barmode = 'stack')
+  
+  
+})
