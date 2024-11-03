@@ -10,7 +10,8 @@ data_table <- reactive({
                        "Active_War_Region_NonPlayer_Full_Join_DeLeon" = Active_War_Region_NonPlayer_Full_Join_DeLeon,
                        "Active_War_Region_NonPlayer_Full_Join_Navarro" = Active_War_Region_NonPlayer_Full_Join_Navarro,
                        "war_44_damage" = war_44_damage,
-                       "war_44_suicides" = war_44_suicides)
+                       "war_44_suicides" = war_44_suicides,
+                       "Active_War_Playtime" = Active_War_Playtime)
 })
 
 # Render Data Table 
