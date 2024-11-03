@@ -1,0 +1,12 @@
+name: rapp
+title: rapp
+username: generalhealthdashboardbenharley
+account: generalhealthdashboardbenharley
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 13201118
+bundleId: 9299483
+url: https://benny24aa.shinyapps.io/rapp/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
