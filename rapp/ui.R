@@ -12,7 +12,7 @@ navbarPage(title = div(tags$a(img(src="", width=120, alt = ""),
                               HTML("<html lang='en'>")),
            
            ##### Tab Panels
-           information,
+           # information,
            Factions_Active_War_UI,
            Active_War_Leaderboard_UI,
            Active_War_Deaths
