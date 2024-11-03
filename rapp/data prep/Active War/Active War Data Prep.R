@@ -6,7 +6,8 @@ Table_KD_List <- c("All Kill Death Ratios" = "Table_War_All_KD_Active_War",
                    "Region Deaths and Kills for DeLeon" = "Active_War_Region_NonPlayer_Full_Join_DeLeon",
                    "Region Deaths and Kills for Navarro" = "Active_War_Region_NonPlayer_Full_Join_Navarro",
                    "Kill to Damage Ratios" = "war_44_damage",
-                   "Suicides" = "war_44_suicides")
+                   "Suicides" = "war_44_suicides",
+                   "Playtime Data" = "Active_War_Playtime")
 
 Active_War <- IMRP_Full_Census_File_Cleaned %>% 
   filter(War_ID == "War 44") %>% 
