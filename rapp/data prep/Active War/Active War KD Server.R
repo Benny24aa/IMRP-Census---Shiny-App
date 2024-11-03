@@ -90,3 +90,13 @@ output$total_percentage_all_wars_by_player_per_day_graph <- renderPlotly({
   
   
 })
+
+output$active_war_graph_overview <- renderPlotly({
+  
+  plot_ly(data = Active_War_Factions_Deaths,
+          x = ~date_killed,
+          y = ~count,
+          color = ~killedFactionId,
+          mode = 'lines')
+  
+})
