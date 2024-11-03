@@ -278,3 +278,18 @@ Active_War_Factions_Deaths <- Active_War_Factions_Deaths %>%
 Active_War_Factions_Deaths_Cum <- Active_War_Factions_Deaths %>% 
   group_by(killedFactionId) %>% 
   mutate(csum = cumsum(count))
+
+Active_War_Playtime_Api <- "https://launcher-api.sa-mp.im/api/v1/misc/war-playtime?war_id=44"
+Active_War_Playtime  <- fromJSON(Active_War_Playtime_Api)
+Active_War_Playtime <- Active_War_Playtime$data
+Active_War_Playtime <- Active_War_Playtime$info
+
+Active_War_Playtime <- bind_rows(Active_War_Playtime)
+
+Active_War_Playtime <- Active_War_Playtime %>% 
+  mutate(date = gsub("T", " ", date), date = gsub("Z", '', date)) %>% 
+  mutate(date = gsub(" .*","", date))
+
+Active_War_Playtime$date <- as.Date(Active_War_Playtime$date)
+Active_War_Playtime$hours_online <- as.numeric(Active_War_Playtime$hours_online)
+
