@@ -256,3 +256,25 @@ Active_War_Death_Graph_Prep <- Active_War_Death_Graph_Prep %>%
   mutate(All_Wars_Total_Percentage = Deaths/total_deaths) %>% 
   mutate(All_Wars_Total_Percentage = All_Wars_Total_Percentage * 100) %>% 
   select(-total_deaths) 
+
+###########################################################################################################
+
+### Faciton vs Faction graphs #############################################################################
+
+###########################################################################################################
+
+
+Active_War_Factions_Deaths <- Active_War %>% 
+  select(killedFactionId, date_killed) %>% 
+  mutate(date_killed = gsub("T", " ", date_killed), date_killed = gsub("Z", '', date_killed)) %>% 
+  mutate(date_killed = gsub(" .*","", date_killed))
+
+Active_War_Factions_Deaths$date_killed <- as.Date(Active_War_Factions_Deaths$date_killed)
+
+Active_War_Factions_Deaths <- Active_War_Factions_Deaths %>% 
+  group_by(killedFactionId, date_killed) %>% 
+  summarise(count=n(), .groups = 'drop')
+
+Active_War_Factions_Deaths_Cum <- Active_War_Factions_Deaths %>% 
+  group_by(killedFactionId) %>% 
+  mutate(csum = cumsum(count))
