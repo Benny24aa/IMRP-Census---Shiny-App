@@ -12,8 +12,12 @@ navbarPage(title = div(tags$a(img(src="", width=120, alt = ""),
                               HTML("<html lang='en'>")),
            
            ##### Tab Panels
-           information, ### Information Tab being called on by UI
-           navbarMenu("DeLeon vs Navarro", Factions_Active_War_UI, Active_War_Leaderboard_UI, Active_War_Deaths) # ,
+           information,
+           Factions_Active_War_UI,
+           Active_War_Leaderboard_UI,
+           Active_War_Deaths
+           ### Information Tab being called on by UI
+           # navbarMenu("DeLeon vs Navarro", Factions_Active_War_UI, Active_War_Leaderboard_UI, Active_War_Deaths) # ,
            # navbarMenu("War Fun Facts"),
            # navbarMenu("War Leaderboards"),
            # navbarMenu("War Location Analysis"),
