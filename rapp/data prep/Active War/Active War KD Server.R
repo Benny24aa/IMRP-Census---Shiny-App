@@ -100,3 +100,15 @@ output$active_war_graph_overview <- renderPlotly({
           mode = 'lines')
   
 })
+
+output$active_war_graph_overview_cum <- renderPlotly({
+  
+  
+  plot_ly(data = Active_War_Factions_Deaths_Cum,
+          x = ~date_killed,
+          y = ~csum,
+          color = ~killedFactionId,
+          mode = 'lines')
+  
+  
+})
