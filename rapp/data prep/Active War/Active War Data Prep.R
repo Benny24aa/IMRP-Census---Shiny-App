@@ -290,6 +290,6 @@ Active_War_Playtime <- Active_War_Playtime %>%
   mutate(date = gsub("T", " ", date), date = gsub("Z", '', date)) %>% 
   mutate(date = gsub(" .*","", date))
 
-Active_War_Playtime$date <- as.Date(Active_War_Playtime$date)
+Active_War_Playtime$date <- as.Date(Active_War_Playtime$date) + 1
 Active_War_Playtime$hours_online <- as.numeric(Active_War_Playtime$hours_online)
 
