@@ -112,3 +112,13 @@ output$active_war_graph_overview_cum <- renderPlotly({
   
   
 })
+
+output$playtime_active_war_graph <- renderPlotly({
+  
+  
+  plot_ly(data = Active_War_Playtime,
+          x = ~date,
+          y = ~hours_online,
+          color = ~f_name,
+          mode = 'lines')
+})
