@@ -3,16 +3,16 @@
 Table_KD_List <- c("All Kill Death Ratios" = "Table_War_All_KD_Active_War",
                    "All Weapon Based Kill Death Ratios" = "Table_War_Weapon_KD_Active_War",
                    "All Region Based Kill Death Ratios" = "Table_War_All_KD_Region_War",
-                   "Region Deaths and Kills for DeLeon" = "Active_War_Region_NonPlayer_Full_Join_DeLeon",
-                   "Region Deaths and Kills for Navarro" = "Active_War_Region_NonPlayer_Full_Join_Navarro",
-                   "Kill to Damage Ratios" = "war_44_damage",
-                   "Suicides" = "war_44_suicides",
+                   "Region Deaths and Kills for Corleone" = "Active_War_Region_NonPlayer_Full_Join_Corleone",
+                   "Region Deaths and Kills for Cuneo" = "Active_War_Region_NonPlayer_Full_Join_Cuneo",
+                   "Kill to Damage Ratios" = "war_45_damage",
+                   "Suicides" = "war_45_suicides",
                    "Playtime Data" = "Active_War_Playtime")
 
 Active_War <- IMRP_Full_Census_File_Cleaned %>% 
-  filter(War_ID == "War 44") %>% 
-  mutate(killerFactionId = gsub('16', 'DeLeon', killerFactionId), killerFactionId = gsub('14', 'Navarro', killerFactionId),
-         killerFactionId = gsub('0', 'Suicide', killerFactionId), killedFactionId = gsub('16', 'DeLeon', killedFactionId), killedFactionId = gsub('14', 'Navarro', killedFactionId))
+  filter(War_ID == "War 45") %>% 
+  mutate(killerFactionId = gsub('1', 'Corleone', killerFactionId), killerFactionId = gsub('4', 'Cuneo', killerFactionId),
+         killerFactionId = gsub('0', 'Suicide', killerFactionId), killedFactionId = gsub('1', 'Corleone', killedFactionId), killedFactionId = gsub('4', 'Cuneo', killedFactionId))
 
 Active_War_kills <- Active_War %>% 
   mutate(Team_Kill = if_else(killedFactionId == killerFactionId, "Team Kill", "Not")) %>% 
@@ -133,41 +133,41 @@ Active_War_Region_NonPlayer_Full_Join <- full_join(Active_War_Deaths_Region_NonP
 
 Active_War_Region_NonPlayer_Full_Join$Region <- Active_War_Region_NonPlayer_Full_Join$Region %>% replace_na("The Sea") 
 
-Active_War_Region_NonPlayer_Full_Join_DeLeon <- Active_War_Region_NonPlayer_Full_Join %>% 
-  filter(Faction == "DeLeon")%>% 
+Active_War_Region_NonPlayer_Full_Join_Corleone <- Active_War_Region_NonPlayer_Full_Join %>% 
+  filter(Faction == "Corleone")%>% 
   mutate(Ratio = Kills/Deaths)
 
-Active_War_Region_NonPlayer_Full_Join_Navarro <- Active_War_Region_NonPlayer_Full_Join %>% 
-  filter(Faction == "Navarro")%>% 
+Active_War_Region_NonPlayer_Full_Join_Cuneo <- Active_War_Region_NonPlayer_Full_Join %>% 
+  filter(Faction == "Cuneo")%>% 
   mutate(Ratio = Kills/Deaths)
 
-war_id_44_player_lookup <- Active_War %>% 
+war_id_45_player_lookup <- Active_War %>% 
   select(killerId, killerName) %>% 
   rename(idPlayer = killerId) %>% 
   group_by(idPlayer, killerName) %>% 
   summarise(count=n(), .groups = 'drop') %>% 
   select(-count)
 
-war_id_44_api_feed <- "https://launcher-api.sa-mp.im/api/v1/misc/war-export?war_id=44"
-war_44 <- fromJSON(war_id_44_api_feed)
-war_44_damage <- war_44$damage %>% 
-  mutate(War_ID = "War 44")
+war_id_45_api_feed <- "https://launcher-api.sa-mp.im/api/v1/misc/war-export?war_id=45"
+war_45 <- fromJSON(war_id_45_api_feed)
+war_45_damage <- war_45$damage %>% 
+  mutate(War_ID = "War 45")
 
-war_44_damage <- full_join(war_id_44_player_lookup, war_44_damage, by = "idPlayer") %>% 
+war_45_damage <- full_join(war_id_45_player_lookup, war_45_damage, by = "idPlayer") %>% 
   select(-idPlayer)
 
-war_44_damage <- war_44_damage %>% 
+war_45_damage <- war_45_damage %>% 
   select(killerName, total_damage) %>% 
   group_by(killerName) %>% 
   summarise(total_damage = sum(total_damage), .groups = 'drop') %>% 
   rename('Player Name' = killerName)
 
-war_44_damage <- full_join(Active_War_kills, war_44_damage, by = "Player Name") %>% 
+war_45_damage <- full_join(Active_War_kills, war_45_damage, by = "Player Name") %>% 
   select(-killerId) %>% 
   mutate(Damage_Kill_Ratio = total_damage / Kills) %>% 
   rename('Total Damage' = total_damage)
 
-war_44_suicides <- Active_War %>% 
+war_45_suicides <- Active_War %>% 
   filter(killerFactionId == "Suicide") %>% 
   select(killedName) %>% 
   group_by(killedName) %>% 
@@ -176,7 +176,7 @@ war_44_suicides <- Active_War %>%
   
 rm(Active_War_Deaths_reason, Active_War_Deaths_Region, Active_War_Deaths_Region_NonPlayer,
    Active_War_KDs, Active_War_kills, Active_War_kills_reason, Active_War_kills_Region, Active_War_kills_Region_NonPlayer, Active_War_Region_NonPlayer_Full_Join)
-rm(war_44 ) 
+rm(war_45) 
 
 #######################################################################################################################################
 
@@ -280,7 +280,7 @@ Active_War_Factions_Deaths_Cum <- Active_War_Factions_Deaths %>%
   group_by(killedFactionId) %>% 
   mutate(csum = cumsum(count))
 
-Active_War_Playtime_Api <- "https://launcher-api.sa-mp.im/api/v1/misc/war-playtime?war_id=44"
+Active_War_Playtime_Api <- "https://launcher-api.sa-mp.im/api/v1/misc/war-playtime?war_id=45"
 Active_War_Playtime  <- fromJSON(Active_War_Playtime_Api)
 Active_War_Playtime <- Active_War_Playtime$data
 Active_War_Playtime <- Active_War_Playtime$info
