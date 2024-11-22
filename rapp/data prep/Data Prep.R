@@ -286,12 +286,17 @@ library(tidyverse)
 # war_43_done <- war_43$kills %>% 
 #   mutate(War_ID = "War 43")
 
-war_id_44_api_feed <- "https://launcher-api.sa-mp.im/api/v1/misc/war-export?war_id=44"
-war_44 <- fromJSON(war_id_44_api_feed)
-war_44_done <- war_44$kills %>% 
-  mutate(War_ID = "War 44")
+# war_id_44_api_feed <- "https://launcher-api.sa-mp.im/api/v1/misc/war-export?war_id=44"
+# war_44 <- fromJSON(war_id_44_api_feed)
+# war_44_done <- war_44$kills %>% 
+#   mutate(War_ID = "War 44")
 
-IMRP_Full_Census_File <- war_44_done
+war_id_45_api_feed <- "https://launcher-api.sa-mp.im/api/v1/misc/war-export?war_id=45"
+war_45 <- fromJSON(war_id_45_api_feed)
+war_45_done <- war_45$kills %>%
+  mutate(War_ID = "War 45")
+
+IMRP_Full_Census_File <- war_45_done
 
 # rm(war_1,war_2, war_4, war_5, war_6, war_7,
 #    war_8, war_9, war_10, war_11, war_12, war_13,
