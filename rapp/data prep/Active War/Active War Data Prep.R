@@ -294,3 +294,71 @@ Active_War_Playtime <- Active_War_Playtime %>%
 Active_War_Playtime$date <- as.Date(Active_War_Playtime$date) + 1
 Active_War_Playtime$hours_online <- as.numeric(Active_War_Playtime$hours_online)
 
+Data_Zone_Count <- Active_War %>% 
+  group_by(Data_Zone, killedFactionId) %>% 
+  summarise(count=n(), .groups = 'drop')
+
+interior_count <- Active_War %>% 
+  group_by(interior) %>% 
+  summarise(count=n(), .groups = 'drop')
+
+player_count <- Active_War %>% 
+  mutate(date_killed = gsub("T", " ", date_killed), date_killed = gsub("Z", '', date_killed)) %>% 
+  mutate(date_killed = gsub(" .*","", date_killed)) %>% 
+  group_by(killedName, date_killed)  %>% 
+  summarise(count=n(), .groups = 'drop')
+
+player_count_final <- player_count %>% 
+  select(date_killed) %>% 
+  group_by(date_killed)  %>% 
+  summarise(count=n(), .groups = 'drop')
+
+data_zone_count_per_day <- Active_War %>% 
+  mutate(date_killed = gsub("T", " ", date_killed), date_killed = gsub("Z", '', date_killed)) %>% 
+  mutate(date_killed = gsub(" .*","", date_killed)) %>% 
+  group_by(Data_Zone, date_killed) %>% 
+  summarise(count=n(), .groups = 'drop')
+
+data_zone_count_per_day_final <- data_zone_count_per_day %>% 
+  select(Data_Zone) %>% 
+  group_by(Data_Zone) %>% 
+  summarise(count=n(), .groups = 'drop')
+
+
+hourly_analysis <- Active_War %>% 
+  select(date_killed) %>% 
+  mutate(date_killed_new = gsub(".*T","", date_killed)) %>% 
+  mutate(date_killed_new = gsub(".000Z", "", date_killed_new))
+
+  hourly_analysis$date_killed_new <- substr(hourly_analysis$date_killed_new, start = 1, stop = 2)
+  
+  
+  hourly_analysis_graph <- hourly_analysis %>% 
+    select(-date_killed) %>% 
+    group_by(date_killed_new) %>% 
+    summarise(count=n(), .groups = 'drop')
+  
+  hourly_graph_theme <- theme(axis.title = element_text(colour="#06402b", family = "sans"),
+                                       axis.text.x = element_text(size=8, colour = "black"),
+                                       axis.text.y = element_text(size=8, colour = "black"),
+                                       axis.title.x = element_text(size=14),
+                                       axis.title.y = element_text(size=14),
+                                       panel.background = element_blank(),
+                                       panel.grid.major.x = element_line(colour = "grey"),
+                                       panel.grid.major.y = element_blank(),
+                                       axis.line.x = element_line(colour="black"),
+                                       axis.line.y = element_line(colour="black"),
+                                       plot.margin = margin(1,1,1,1, "cm"))
+  
+  hourly_graph_output <- hourly_analysis_graph %>%
+    ggplot(aes(x = date_killed_new, y = count)) +
+    geom_bar(stat = "identity")+
+    hourly_graph_theme
+  
+  ggsave("hourly data.png",
+         plot = hourly_graph_output,
+         height = 7.5,
+         width = 18,
+         dpi = 300)
+  
+  
